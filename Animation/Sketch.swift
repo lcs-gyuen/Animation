@@ -8,6 +8,11 @@ class Sketch : NSObject {
     
     // Position of circle
     var x : Int
+    var y : Int
+    
+    // Change in position of circle
+    var dx : Int
+    var dy : Int
     
     // This function runs once
     override init() {
@@ -16,19 +21,50 @@ class Sketch : NSObject {
         canvas = Canvas(width: 500, height: 500)
         
         // Set starting position
-        x = 250
+        x = random(from: 1, toButNotIncluding: 500)
+        y = random(from: 1, toButNotIncluding: 500)
+        
+        
+        // Set the change value
+        dx = 2
+        dy = 2
         
     }
     
     // Runs in a loop, forever, to create the animated effect
     func draw() {
         
-        // Change position
-        x += 1
+        // Position Change
+        x += dx
+        y += dy
         
-        // Draw an ellipse in the middle of the canvas
-        canvas.drawEllipse(centreX: x, centreY: 250, width: 50, height: 50)
         
+        // To Remove the Trail
+        canvas.fillColor = Color.white
+        canvas.drawRectangle(bottomLeftX: 0, bottomLeftY: 0, width: 500, height: 500)
+        
+        
+        // To Left
+        if x < 0 {
+            dx = 2// move right
+        } // end of block
+        
+        // To Right
+        if x > 490 { // touch right edge
+            dx = -2 // move left
+        }
+        
+        if y < 0 {
+            dy = 2
+        }
+        
+        if y > 490 {
+            dy = -2
+        }
+        
+        // Black Ball
+        canvas.fillColor = Color.black
+        canvas.drawEllipse(centreX: x, centreY: y, width: 50, height: 50)
     }
     
 }
