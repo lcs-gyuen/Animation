@@ -7,8 +7,11 @@ class Sketch : NSObject {
     let canvas : Canvas
     
     // Position of circle
-    var x : Int
-    
+    var x : Double
+    var y : Double
+    var h : Double
+    var a : Double
+    var k : Double
     // This function runs once
     override init() {
         
@@ -16,18 +19,22 @@ class Sketch : NSObject {
         canvas = Canvas(width: 500, height: 500)
         
         // Set starting position
-        x = 250
-        
+        x = 0
+        y = 0
+        a = 0.008
+        h = -250
+        k = 500
     }
-    
-    // Runs in a loop, forever, to create the animated effect
-    func draw() {
         
         // Change position
-        x += 1
-        
         // Draw an ellipse in the middle of the canvas
-        canvas.drawEllipse(centreX: x, centreY: 250, width: 50, height: 50)
+        
+        x += 1
+        y = -(a*pow(x+h,2))+k
+        
+        // parabola function: y=a(x-h)^2+k
+        
+        canvas.drawEllipse(centreX: Int(x), centreY: Int(y), width: 10, height: 10)
         
     }
     
